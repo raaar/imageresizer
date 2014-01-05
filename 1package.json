@@ -1,0 +1,10 @@
+{
+	"name": "iconizer",
+	"version": "0.0.1",
+	"description": "Minimalist favicon genny",
+	"dependencies": {
+		"formidable": "1.0.14",
+		"gm": "1.14.2"
+	}
+}
+

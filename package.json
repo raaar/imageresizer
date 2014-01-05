@@ -1,0 +1,34 @@
+{
+  "name": "iconizer",
+  "version": "1.0.0",
+  "description": "Minimalist favicon generator",
+  "main": "server.js",
+  "dependencies": {
+    "formidable": "~1.0.14",
+    "gm": "~1.14.2"
+  },
+  "dependencies": {
+    "formidable": "1.0.14",
+    "gm": "1.14.2"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "scripts": {
+    "test": "-v",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raaar/imageresizer.git"
+  },
+  "keywords": [
+    "favicon"
+  ],
+  "author": "raflondon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raaar/imageresizer/issues"
+  },
+  "homepage": "https://github.com/raaar/imageresizer"
+}

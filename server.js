@@ -4,6 +4,7 @@ var gm = require('gm');
 var formidable = require('formidable');
 
 
+
 var server = http.createServer(function(req, res) {
 	switch (req.method){
 		case 'GET':
@@ -20,15 +21,21 @@ server.listen(3000);
 
 function show(req, res) {
 	var html = ''
+		+ '<head>'
+		+ '<link rel="stylesheet" type="text/css" href="https://raw.github.com/avioli/bootstrap-minified/master/bootstrap/css/bootstrap.min.css" />'
+		+ '</head>'
+		+ '<body>'
     	+ '<form method="post" action="/" enctype="multipart/form-data">'
     	+ '<p><input type="text" name="name" /></p>'
     	+ '<p><input type="file" name="file" /></p>'
-    	+ '<p><input type="submit" value="Upload" /></p>'
-    	+ '</form>';
+    	+ '<p><input class="btn btn-info" type="submit" value="Upload" /></p>'
+    	+ '</form>'
+    	+ '</body>'
     res.setHeader('Content-Type', 'text/html');
     res.setHeader('Content-Length' , Buffer.byteLength(html));
 
     res.end(html);
+
 }
 
 
@@ -52,19 +59,25 @@ function upload(req , res) {
 		//console.log(name);
 		//console.log();
 
-		processImage(form.uploadDir + "/" + "favicon.jpg", function(){
-			fs.unlink( "uploaded/favicon.jpg" , function (err) {
-			  if (err) throw err;
-			  console.log('successfully deleted /uploaded contents');
-			});			
-		});
+		processImage(form.uploadDir + "/" + "favicon.jpg");
 	});
 
 	form.on('end' , function(){
-		fs.readFile( __dirname + '/processed/favicon.jpg', function (err, data) {
-			if (err) throw err;		
-			res.end(data);
-		});
+		
+		setTimeout(function(){
+			fs.unlink( __dirname + '/uploaded/favicon.jpg' , function (err) {
+				 if (err) throw err;
+				 console.log('successfully deleted /uploaded contents');
+			});	
+
+			fs.readFile( __dirname + '/processed/favicon.jpg', function (err, data) {
+				if (err) throw err;
+				//console.log( data);
+			    //res.setHeader('Content-Type', 'text/html');		
+				res.end(data);
+			});
+
+		},100);
 
 	})
 
@@ -80,7 +93,8 @@ function isFormData(req) {
 
 
 
-function processImage(file, cleanup ) {
+function processImage(file) {
+	console.log(file);
 	//console.log("file: " + file);
 	gm(file)
 		.resize(16, 16)
@@ -89,6 +103,4 @@ function processImage(file, cleanup ) {
 			if (err) return err;
 			console.log(' hooray! ');
 		});
-
-	cleanup();
 }
